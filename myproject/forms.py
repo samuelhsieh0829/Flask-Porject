@@ -5,7 +5,7 @@ from myproject.models import User
 
 class LoginForm(FlaskForm):
     email = StringField('電子郵件', validators=[DataRequired(), Email()])
-    password = PasswordField('密碼',validators=[DataRequired()])
+    password = PasswordField('密碼', validators=[DataRequired()])
     submit = SubmitField('登入系統')
 
 class RegistrationForm(FlaskForm):
@@ -24,3 +24,4 @@ class RegistrationForm(FlaskForm):
         existing_user = User.find_by_username(field.data)
         if existing_user:
             raise ValidationError('使用者名稱已經存在')
+
