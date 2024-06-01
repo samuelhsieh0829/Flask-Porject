@@ -26,3 +26,7 @@ class User(UserMixin):
     @staticmethod
     def find_by_id(user_id):
         return db.users.find_one({'_id': ObjectId(user_id)})
+    
+    @staticmethod
+    def find_by_username(username):
+        return db.users.find_one({'username': username})
