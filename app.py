@@ -5,6 +5,8 @@ from pymongo import MongoClient
 from myproject.forms import LoginForm, RegistrationForm
 from dotenv import load_dotenv
 import os
+from myproject import db
+from myproject.models import User
 
 load_dotenv()
 
