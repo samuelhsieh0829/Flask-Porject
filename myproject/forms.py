@@ -18,10 +18,10 @@ class RegistrationForm(FlaskForm):
     def validate_email(self, field):
         existing_user = User.find_by_email(field.data)
         if existing_user:
-            raise ValidationError('電子郵件已經被註冊過了')
+            raise ValidationError("電子郵件已經被註冊過了")
 
     def validate_username(self, field):
         existing_user = User.find_by_username(field.data)
         if existing_user:
-            raise ValidationError('使用者名稱已經存在')
+            raise ValidationError("使用者名稱已經存在")
 
