@@ -42,7 +42,7 @@ def home():
 @login_required
 def logout():
     logout_user()
-    flash("您已經登出系統")
+    flash('您已經登出系統')
     return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -55,7 +55,7 @@ def register():
             'password': form.password.data
         }
         db.users.insert_one(user)
-        flash("感謝註冊本系統成為會員")
+        flash('感謝註冊本系統成為會員')
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
@@ -72,7 +72,7 @@ def login():
         if user and user['password'] == form.password.data:
             user_obj = MyUser(user)
             login_user(user_obj)
-            flash("您已經成功的登入系統")
+            flash('您已經成功的登入系統')
             next_page = request.args.get('next')
             if not next_page or not next_page.startswith('/'):
                 next_page = url_for('welcome_user')
