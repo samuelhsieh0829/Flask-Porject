@@ -5,7 +5,7 @@ from myproject.models import User
 
 class LoginForm(FlaskForm):
     email = StringField('電子郵件', validators=[DataRequired(), Email()])
-    password = PasswordField('密碼',validators=[DataRequired()])
+    password = PasswordField('密碼', validators=[DataRequired()])
     submit = SubmitField('登入系統')
 
 class RegistrationForm(FlaskForm):
@@ -16,11 +16,12 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('註冊')
 
     def validate_email(self, field):
-        """檢查Email"""
-        if User.query.filter_by(email=field.data).first():
-            raise ValidationError('電子郵件已經被註冊過了')
+        existing_user = User.find_by_email(field.data)
+        if existing_user:
+            raise ValidationError("電子郵件已經被註冊過了")
 
     def validate_username(self, field):
-        """檢查username"""
-        if User.query.filter_by(username=field.data).first():
-            raise ValidationError('使用者名稱已經存在')
+        existing_user = User.find_by_username(field.data)
+        if existing_user:
+            raise ValidationError("使用者名稱已經存在")
+

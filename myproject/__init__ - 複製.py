@@ -1,18 +1,18 @@
 import os
 from flask import Flask
-from pymongo import MongoClient
-from flask_migrate import Migrate
 from flask_login import LoginManager
+from pymongo import MongoClient
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'acretkeyinthisproject'
-client = MongoClient(os.environ.get('MONGODB_URI'))
-db = client.get_database('Users')
 
-migrate = Migrate(app, db)
+app.config['SECRET_KEY'] = 'acretkeyinthisproject'
+
+client = MongoClient(os.environ.get('MONGODB_URI'))
+
+db = client.get_database('Users')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
