@@ -1,3 +1,5 @@
+import sys 
+sys.dont_write_bytecode = True
 from myproject import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -26,3 +28,7 @@ class User(UserMixin):
     @staticmethod
     def find_by_id(user_id):
         return db.users.find_one({'_id': ObjectId(user_id)})
+    
+    @staticmethod
+    def find_by_username(username):
+        return db.users.find_one({'username': username})

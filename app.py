@@ -2,6 +2,8 @@ from bson import ObjectId
 from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user, LoginManager, UserMixin
 from pymongo import MongoClient
+import sys 
+sys.dont_write_bytecode = True
 from myproject.forms import LoginForm, RegistrationForm
 from dotenv import load_dotenv
 import os
@@ -32,7 +34,6 @@ def load_user(user_id):
         return MyUser(user_data)
     return None
 
-
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -48,9 +49,12 @@ def logout():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = MyUser(email=form.email.data,
-                    username=form.username.data, password=form.password.data)
-        db.users.insert_one({'email': user.email, 'username': user.username, 'password': user.password})
+        user = {
+            'email': form.email.data,
+            'username': form.username.data,
+            'password': form.password.data
+        }
+        db.users.insert_one(user)
         flash("感謝註冊本系統成為會員")
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
@@ -65,8 +69,8 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = db.users.find_one({'email': form.email.data})
-        if user is not None and user['password'] == form.password.data:
-            user_obj = MyUser(user['_id'], user['email'], user['username'], user['password'])
+        if user and user['password'] == form.password.data:
+            user_obj = MyUser(user)
             login_user(user_obj)
             flash("您已經成功的登入系統")
             next_page = request.args.get('next')

@@ -3,6 +3,8 @@ from flask import Flask
 from flask_login import LoginManager
 from pymongo import MongoClient
 from dotenv import load_dotenv
+import sys 
+sys.dont_write_bytecode = True
 
 load_dotenv()
 

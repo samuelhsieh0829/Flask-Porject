@@ -1,11 +1,13 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+import sys 
+sys.dont_write_bytecode = True
 from myproject.models import User
 
 class LoginForm(FlaskForm):
     email = StringField('電子郵件', validators=[DataRequired(), Email()])
-    password = PasswordField('密碼',validators=[DataRequired()])
+    password = PasswordField('密碼', validators=[DataRequired()])
     submit = SubmitField('登入系統')
 
 class RegistrationForm(FlaskForm):
