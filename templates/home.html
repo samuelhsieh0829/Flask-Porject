@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>網管實作登入登出系統</title>
+    <title>星巴克預約網站</title>
+    <link rel="icon" href="C:\Users\brian\OneDrive\文件\Flask 成發\Flask-Porject\templates\星巴克LOGO.png">
     <link rel="stylesheet" href="home_outplayed.css">
 </head>
 <body>
-{% extends "base.html" %}
-{% block title %}首頁 ｜Login Exp{% endblock %}
-{% block content %}
-...
-{% endblock %}
-{% if current_user.is_authenticated %}
-<h1 class="display-4">{{current_user.username}}</h1>
-{% else %}
-<p>請 <a href="{{url_for('login')}}">登入帳號</a> 或 <a href="{{url_for('register')}}">註冊帳號</a>
-</p>
-{% endif %}
+    <p style="background-image:href('C:\Users\brian\OneDrive\文件\Flask 成發\Flask-Porject\templates\網頁背景.png')">
+
+    <p> 請 <a href="{{url_for('login')}}">登入帳號</a> 或 <a href="{{url_for('register')}}">註冊帳號</a></p>
+
+
 </body>
 </html>
