@@ -3,15 +3,16 @@ from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user, LoginManager, UserMixin
 from pymongo import MongoClient
 import sys 
-sys.dont_write_bytecode = True
 from myproject.forms import LoginForm, RegistrationForm
 from dotenv import load_dotenv
 import os
 
+sys.dont_write_bytecode = True
+
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "acdretkweyingggthigsprojesct"
+app.secret_key = os.getenv('SECRET_KEY')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -22,14 +23,14 @@ db = client.get_database('Users')
 
 class MyUser(UserMixin):
     def __init__(self, user_data):
-        self.id = str(user_data['_id'])
+        self.id = str(user_data['id'])
         self.email = user_data['email']
         self.username = user_data['username']
-        self.password = user_data['password']
+        self.password = user_data['password_hash']
 
 @login_manager.user_loader
 def load_user(user_id):
-    user_data = db.users.find_one({'_id': ObjectId(user_id)})
+    user_data = db.users.find_one({'id': ObjectId(user_id)})
     if user_data:
         return MyUser(user_data)
     return None
@@ -52,7 +53,7 @@ def register():
         user = {
             'email': form.email.data,
             'username': form.username.data,
-            'password': form.password.data
+            'password_hash': form.password_hash.data
         }
         db.users.insert_one(user)
         flash("感謝註冊本系統成為會員")
@@ -69,7 +70,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = db.users.find_one({'email': form.email.data})
-        if user and user['password'] == form.password.data:
+        if user and user['password_hash'] == form.password.data:
             user_obj = MyUser(user)
             login_user(user_obj)
             flash("您已經成功的登入系統")
