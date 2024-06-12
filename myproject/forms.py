@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
-import sys 
-sys.dont_write_bytecode = True
 from myproject.models import User
+import sys
+
+sys.dont_write_bytecode = True
 
 class LoginForm(FlaskForm):
     email = StringField('電子郵件', validators=[DataRequired(), Email()])
