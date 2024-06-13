@@ -11,7 +11,7 @@ from myproject.models import User
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "acdretkweyingggthigsprojesct"
+app.secret_key = "your_secret_key"
 
 login_manager = LoginManager()
 login_manager.init_app(app)

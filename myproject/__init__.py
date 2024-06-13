@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'acretkeyinthisproject'
+app.config['SECRET_KEY'] = 'your_secret_key'
 client = MongoClient(os.environ.get('MONGODB_URI'))
 db = client.get_database('Users')
 
